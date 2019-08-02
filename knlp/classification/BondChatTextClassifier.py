@@ -31,7 +31,7 @@ class BondChatTextClassifier(object):
         with open(filepath, encoding="utf8") as fi:
             csv_reader = csv.reader(fi)
             for row in csv_reader:
-                X.append( self.converter.text2number(row[0], padding=self.padding) )
+                X.append( self.preprocessText(row[0]) )
                 y.append( mapping[row[1]] )
         clf = RandomForestClassifier(*args, **kwargs)
         scores = cross_val_score(clf, X, y, cv=5)
@@ -44,11 +44,14 @@ class BondChatTextClassifier(object):
         if self.clf == None:
             return None
         else:
-            textes = [ self.converter.text2number(text, padding=self.padding)  for text in textes]
+            textes = [ self.preprocessText(text) for text in textes]
             return self.clf.predict( textes )
+
+    def preprocessText(self, text):
+        return self.converter.text2number(text, padding=self.padding, dropIfNotExist=False) 
 
 
 if __name__=="__main__":
-    bctc = BondChatTextClassifier(load_model_on_init=True)
+    bctc = BondChatTextClassifier(load_model_on_init=True, padding=200)
     #bctc.train("C:/Users/Administrator/git/knlp/train_data/bond_chat_msg.csv",n_estimators=80)
-    print(bctc.predict(["""bid 恒大 富力 等地产"""]))
+    print(bctc.predict(["""bid 万科"""]))
