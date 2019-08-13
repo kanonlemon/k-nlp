@@ -4,7 +4,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score
 import joblib
 
-class BondChatTextClassifier(object):
+class BondChatTextRFClassifier(object):
 
     def __init__(self, model_path=None, load_model_on_init=False, padding=200, *args, **kwargs):
         self.converter = TextConverter()
@@ -52,6 +52,6 @@ class BondChatTextClassifier(object):
 
 
 if __name__=="__main__":
-    bctc = BondChatTextClassifier(load_model_on_init=True, padding=200)
+    bctc = BondChatTextRFClassifier(load_model_on_init=True, padding=200)
     #bctc.train("C:/Users/Administrator/git/knlp/train_data/bond_chat_msg.csv",n_estimators=80)
     print(bctc.predict(["""bid 万科"""]))

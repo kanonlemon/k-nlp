@@ -53,6 +53,3 @@ class TextConverter(object):
         return results
 
 
-if __name__ == "__main__":
-    converter = TextConverter()
-    print(converter.text2number("借隔夜6000万元#押利率#", dropIfNotExist=False))
